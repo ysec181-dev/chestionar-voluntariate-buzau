@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Voluntariate Buzău</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f8f8ff; }
+        h1 { color: #333; }
+        .question { margin-bottom: 20px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+        #result { margin-top: 30px; font-size: 20px; font-weight: bold; color: #0077aa; }
+    </style>
+</head>
+<body>
+
+<h1>Chestionar – La ce voluntariat din Buzău te potrivești?</h1>
+
+<form id="quizForm">
+
+    <div class="question">
+        1. Ce tip de activități îți plac cel mai mult?<br>
+        <input type="radio" name="q1" value="arte"> Activități artistice<br>
+        <input type="radio" name="q1" value="organizare"> Organizare de evenimente<br>
+        <input type="radio" name="q1" value="social"> Ajutor social<br>
+        <input type="radio" name="q1" value="educatie"> Educație și copii<br>
+    </div>
+
+    <div class="question">
+        2. Preferi activități cu multă lume sau mai liniștite?<br>
+        <input type="radio" name="q2" value="multilume"> Cu multă lume<br>
+        <input type="radio" name="q2" value="linistite"> Mai liniștite<br>
+    </div>
+
+    <div class="question">
+        3. Ce te motivează cel mai mult să fii voluntar?<br>
+        <input type="radio" name="q3" value="arta"> Arta și cultura<br>
+        <input type="radio" name="q3" value="comunitate"> A ajuta comunitatea<br>
+        <input type="radio" name="q3" value="educatie"> A lucra cu copii<br>
+        <input type="radio" name="q3" value="urgente"> A ajuta în situații de urgență<br>
+    </div>
+
+    <div class="question">
+        4. Cum te descrii?<br>
+        <input type="radio" name="q4" value="creativ"> Creativ(ă)<br>
+        <input type="radio" name="q4" value="responsabil"> Responsabil(ă)<br>
+        <input type="radio" name="q4" value="sociabil"> Sociabil(ă)<br>
+        <input type="radio" name="q4" value="curajos"> Curajos(oasă)<br>
+    </div>
+
+    <div class="question">
+        5. Ce tip de evenimente te atrag cel mai mult?<br>
+        <input type="radio" name="q5" value="festival"> Festivaluri<br>
+        <input type="radio" name="q5" value="biblioteca"> Activități culturale<br>
+        <input type="radio" name="q5" value="mediu"> Activități comunitare<br>
+        <input type="radio" name="q5" value="urgenta"> Situații de urgență<br>
+    </div>
+
+    <div class="question">
+        6. Cât de mult îți place să lucrezi cu copiii?<br>
+        <input type="radio" name="q6" value="mult"> Foarte mult<br>
+        <input type="radio" name="q6" value="putin"> Puțin<br>
+        <input type="radio" name="q6" value="deloc"> Deloc<br>
+    </div>
+
+    <div class="question">
+        7. Cât de bine te descurci în situații stresante?<br>
+        <input type="radio" name="q7" value="bine"> Foarte bine<br>
+        <input type="radio" name="q7" value="mediu"> Bine<br>
+        <input type="radio" name="q7" value="slab"> Mai greu<br>
+    </div>
+
+    <div class="question">
+        8. Ai prefera activități creative sau tehnice?<br>
+        <input type="radio" name="q8" value="creative"> Creative<br>
+        <input type="radio" name="q8" value="tehnice"> Tehnice<br>
+    </div>
+
+    <div class="question">
+        9. Îți place să te implici în evenimente mari?<br>
+        <input type="radio" name="q9" value="da"> Da<br>
+        <input type="radio" name="q9" value="nu"> Nu<br>
+    </div>
+
+    <div class="question">
+        10. Ce preferi?<br>
+        <input type="radio" name="q10" value="cultura"> Activități culturale<br>
+        <input type="radio" name="q10" value="stiinta"> Activități științifice<br>
+        <input type="radio" name="q10" value="comunitar"> Activități comunitare<br>
+        <input type="radio" name="q10" value="urgenta"> Situații de urgență<br>
+    </div>
+
+    <button type="button" onclick="calculate()">Află voluntariatul potrivit</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+function calculate() {
+    const answers = {};
+    const form = document.getElementById('quizForm');
+
+    for (let i = 1; i <= 10; i++) {
+        const q = form["q" + i];
+        if (q) {
+            for (let option of q) {
+                if (option.checked) {
+                    answers["q" + i] = option.value;
+                }
+            }
+        }
+    }
+
+    let score_arte = 0;
+    let score_evenimente = 0;
+    let score_social = 0;
+    let score_educatie = 0;
+    let score_urgenta = 0;
+
+    // Calcul simplificat
+    for (let a of Object.values(answers)) {
+        if (a === "arte" || a === "creativ" || a === "festival") score_arte++;
+        if (a === "organizare" || a === "multilume") score_evenimente++;
+        if (a === "social" || a === "comunitate" || a === "sociabil") score_social++;
+        if (a === "educatie" || a === "mult") score_educatie++;
+        if (a === "urgenta" || a === "curajos" || a === "bine") score_urgenta++;
+    }
+
+    let result = "";
+    let maxScore = Math.max(score_arte, score_evenimente, score_social, score_educatie, score_urgenta);
+
+    if (maxScore === score_arte) result = "Buzău International Arts Festival (BIAF) / Teatrul George Ciprian / Antante Festival";
+    else if (maxScore === score_evenimente) result = "Drăgaica / ThinkUP / Interact Buzău";
+    else if (maxScore === score_social) result = "Fundația Comunitară / Rospin / Centrul Cultural Francofon";
+    else if (maxScore === score_educatie) result = "Consiliul Județean al Elevilor (CJE) / Biblioteca Județeană / CCAM";
+    else if (maxScore === score_urgenta) result = "ISU Buzău / Serviciul de Ambulanță (SAJ)";
+
+    document.getElementById("result").innerHTML = "Te potrivești cel mai bine cu: <br><br><strong>" + result + "</strong>";
+}
+</script>
+
+</body>
+</html>
